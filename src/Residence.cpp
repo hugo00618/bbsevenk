@@ -14,6 +14,14 @@ void Residence::print(int lineNum, int leftMargin, int topMargin) {
         cout << setw(leftMargin) << "";
     }
     
+    if (number == 15) {
+        if (lineNum >= 3 && lineNum <= 5) {
+            cout << "*";
+        } else {
+            cout << " ";
+        }
+    };
+    
     switch (lineNum) {
         case 1: {
             if (number == 15) {
@@ -38,11 +46,8 @@ void Residence::print(int lineNum, int leftMargin, int topMargin) {
             break;
         }
         case 3: {
-            string placeHolder = combo? "***": "---";
             cout << "|";
-            cout << placeHolder;
-            cout << (owner? string(1,owner->getPiece()): "-");
-            cout << placeHolder;
+            repeat(" ", 7);
             if (number == 15) {
                 bar14();
                 cout << "|  $$    $$<$$    $$<   /$$/  $$  $$<     |";
@@ -76,6 +81,11 @@ void Residence::print(int lineNum, int leftMargin, int topMargin) {
     
     if (number == 35) {
         cout << "|";
+        if (lineNum >= 3 && lineNum <= 5) {
+            cout << "*";
+        } else {
+            cout << " ";
+        }
     }
     
 }

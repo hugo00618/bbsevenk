@@ -14,6 +14,14 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
         cout << setw(leftMargin) << "";
     }
     
+    if (number == 12) {
+        if (lineNum >= 3 && lineNum <= 5) {
+            cout << "*";
+        } else {
+            cout << " ";
+        }
+    }
+    
     switch (lineNum) {
         case 1: {
             if (number == 12) {
@@ -32,12 +40,8 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
             break;
         }
         case 3: {
-            string placeHolder = combo? "***": "---";
             cout << "|";
-            cout << placeHolder;
-            cout << (owner? string(1,owner->getPiece()): "-");
-            cout << placeHolder;
-            
+            repeat(" ", 7);
             if (number == 12) {
                 bar71();
             }

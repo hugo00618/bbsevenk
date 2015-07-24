@@ -38,7 +38,7 @@ void Block::bar7bar71() {
 
 void Block::print(int lineNum, int leftMargin, int topMargin) {
     if (number >= 10 && number <= 20) {
-        cout << setw(leftMargin) << "";
+        cout << setw(leftMargin+1) << "";
     }
     
     switch (lineNum) {

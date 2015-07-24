@@ -10,6 +10,8 @@ Game::Game() {
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &myWindowsSize);
     int myWindowWidth = myWindowsSize.ws_col;
     int myWindowHeight = myWindowsSize.ws_row;
+    myLeftMargin = (myWindowWidth-91)/2;
+    myTopMargin = (myWindowHeight-58)/2;
     
     // gameboard
     gameboard = new Block*[40];
@@ -63,7 +65,7 @@ Game::Game() {
     pieces['$'] = "Money";
     pieces['L'] = "Laptop";
     pieces['T'] = "Pink Tie";
-
+    
     // welcome screen
     clearScreen(myWindowHeight);
     cout << setw((myWindowWidth+10)/2) << "Welcome to" << endl;
@@ -83,6 +85,7 @@ Game::Game() {
     // setup
     clearScreen(myWindowHeight);
     while (true) {
+        printBoard(myWindowWidth, myWindowHeight);
         cout << "Number of players (2-" << MAX_NUM_OF_PLAYERS << "): ";
         string tmpS;
         cin >> tmpS;
@@ -165,7 +168,7 @@ Game::Game() {
         
         gameboard[39]->addLander(&players[i]);
     }
-
+    
     printBoard(myWindowWidth, myWindowHeight);
     
     // play game
@@ -191,78 +194,112 @@ void clearScreen(int windowHeight) {
 void Game::printBoard(int myWindowWidth, int myWindowHeight) {
     clearScreen(myWindowHeight);
     
+    cout << setw(myLeftMargin+1) << "";
+    for (int i = 0; i < 11; i++) {
+        cout << "  ";
+        if (dynamic_cast<NonProperty*>(gameboard[i])) {
+            for (int j = 0; j < 5; j++) {
+                cout << " ";
+            }
+        } else {
+            for (int j = 0; j < 5; j++) {
+                cout << "*";
+            }
+        }
+        cout << " ";
+    }
+    cout << endl;
+    
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 11; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 11; j < 13; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 13; j < 15; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 15; j < 17; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 17; j < 19; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 19; j < 21; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 21; j < 23; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 23; j < 25; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 25; j < 27; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 27; j < 29; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 29; j < 40; j++) {
-            gameboard[j]->print(i+1, (myWindowWidth-89)/2, (myWindowHeight-56)/2);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
         }
         cout << endl;
     }
-    cout << setw((myWindowWidth-89)/2) << "";
+    
+    cout << setw(myLeftMargin+1) << "";
     for (int i = 0; i < 11; i++) {
         cout << "|_______";
     }
     cout << "|" << endl;
-    clearScreen((myWindowHeight-56)/2);
+    
+    cout << setw(myLeftMargin+1) << "";
+    for (int i = 29; i < 40; i++) {
+        cout << "  ";
+        if (dynamic_cast<NonProperty*>(gameboard[i])) {
+            for (int j = 0; j < 5; j++) {
+                cout << " ";
+            }
+        } else {
+            for (int j = 0; j < 5; j++) {
+                cout << "*";
+            }
+        }
+        cout << " ";
+    }
+    cout << endl;
+    
+    clearScreen(myTopMargin);
 }
 
 void Game::printHelp(int myWindowWidth, int myWindowHeight) {

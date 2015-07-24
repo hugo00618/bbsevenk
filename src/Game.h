@@ -32,6 +32,7 @@ class Game {
         string discription;
     };
     map<char, string> pieces;
+    int myLeftMargin, myTopMargin;
     
     void printBoard(int myWindowWidth, int myWindowHeight);
 public:

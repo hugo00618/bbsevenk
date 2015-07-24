@@ -10,6 +10,14 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
         cout << setw(leftMargin) << "";
     }
     
+    if (number == 11 || number == 13 || number == 14 || number == 16 || number == 18 || number == 19) {
+        if (lineNum >= 3 && lineNum <= 5) {
+            cout << "*";
+        } else {
+            cout << " ";
+        }
+    }
+    
     switch (lineNum) {
         case 1: {
             if (number == 14) {
@@ -44,7 +52,8 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             for (int i = 0; i < improvementLevel; i++) {
                 s.append("*");
             }
-            cout << setw(7) << left << s;
+            string colour = getColour();
+            cout << colour << setw(7) << left << s << "\e[49m";
             
             if (number == 11 || number == 13 || number == 16 ||number == 18 || number == 19) {
                 bar71();
@@ -107,12 +116,41 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
         }
     }
     
-    if ((number >= 30 && number <= 39) || number == 0) {
+    if ((number >= 30 && number <= 39)) {
         cout << "|";
-        
+            if (lineNum >= 3 && lineNum <= 5) {
+                cout << "*";
+            } else {
+                cout << " ";
+            }
     }
 }
 
 int AcademicBuilding::getTuition(int steps = 0) {
     return 0;
+}
+
+string AcademicBuilding::getColour() {
+    string colour = "\e[48;5;";
+    
+    if (number == 1 || number == 3) {
+        colour.append("130");
+    } else if (number == 6 || number == 8 || number == 9) {
+        colour.append("172");
+    } else if (number == 11 || number == 13 || number == 14) {
+        colour.append("54");
+    } else if (number == 16 || number == 18 || number == 19) {
+        colour.append("30");
+    } else if (number == 21 || number == 23 || number == 24) {
+        colour.append("142");
+    } else if (number == 26 || number == 27 || number == 29) {
+        colour.append("32");
+    } else if (number == 31 || number == 32 || number == 34) {
+        colour.append("111");
+    } else if (number == 37 || number == 39) {
+        colour.append("162");
+    }
+    colour.append("m");
+    
+    return colour;
 }
