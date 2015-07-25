@@ -168,10 +168,6 @@ Game::Game() {
         printBoard(myWindowWidth, myWindowHeight);
     }
     
-        dynamic_cast<Property*>(gameboard[1])->setOwner(players[0]);
-    
-    printBoard(myWindowWidth, myWindowHeight);
-    
     // play game
 }
 
@@ -198,7 +194,7 @@ void Game::printBoard(int myWindowWidth, int myWindowHeight) {
     cout << setw(myLeftMargin+1) << "";
     for (int i = 0; i < 11; i++) {
         if (dynamic_cast<NonProperty*>(gameboard[i])) {
-            for (int j = 0; j < 7; j++) {
+            for (int j = 0; j < 8; j++) {
                 cout << " ";
             }
         } else {

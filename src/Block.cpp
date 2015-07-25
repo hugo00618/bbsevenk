@@ -132,10 +132,15 @@ void Block::print(int lineNum, int leftMargin, int topMargin) {
             break;
         case 5:
             string s = "";
+            int count = 0;
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
+                count++;
+                s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
                 s.append(string(1, (*it)->getPiece()));
             }
-            cout << "|" << setw(7) << left << s;
+            
+            cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
+            repeat(" ", 7-count);
             if (number == 17) {
                 bar71();
             }

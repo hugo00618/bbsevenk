@@ -15,8 +15,12 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
     }
     
     if (number == 12) {
-        if (lineNum >= 3 && lineNum <= 5) {
-            cout << "*";
+        if (lineNum >= 3 && lineNum <= 5 && owner) {
+            if (combo) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
+            } else {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
+            }
         } else {
             cout << " ";
         }
@@ -58,8 +62,9 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
             string s = "";
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
                 s.append(string(1, (*it)->getPiece()));
+                s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
             }
-            cout << "|" << setw(7) << left << s;
+            cout << "|" << setw(7) << left << s << "\e[49m";
             if (number == 12) {
                 bar71();
             }

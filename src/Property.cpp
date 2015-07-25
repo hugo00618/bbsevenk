@@ -17,12 +17,12 @@ void Property::printOwnership() {
     if ((number >= 0 && number <= 10) || (number >= 20 && number <= 30)) {
         if (owner) {
             if (combo) {
-                cout << "   " << owner->getColour() << "*****" << COLOUR_DEFAULT << " ";
+                cout << "  " << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*****" << COLOUR_DEFAULT_BACKGROUND << " ";
             } else {
-                cout << "   " << owner->getColour() << "     " << COLOUR_DEFAULT << " ";
+                cout << "  " << owner->getColour(COLOUR_TYPE_BACKGROUND) << "     " << COLOUR_DEFAULT_BACKGROUND << " ";
             }
         } else {
-            cout << setw(7) << "";
+            cout << setw(8) << "";
         }
     }
 }

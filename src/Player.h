@@ -10,6 +10,11 @@
 
 using namespace std;
 
+const int INITIAL_BALANCE = 1500;
+
+const int COLOUR_TYPE_FOREGROUND = 0;
+const int COLOUR_TYPE_BACKGROUND = 1;
+
 class Player {
     string name;
     char piece;
@@ -21,13 +26,14 @@ class Player {
     int doubleCount;
     int rollDice();
 public:
+    Player();
     void setName(string name);
     string getName();
     void setPiece(char piece);
     char getPiece();
     void setNumber(int number);
     int getNumber();
-    string getColour();
+    string getColour(int type);
     void roll();
     void next();
     void trade(string tradeWith, vector<Property*> myProperties, vector<Property*> othersProperties);

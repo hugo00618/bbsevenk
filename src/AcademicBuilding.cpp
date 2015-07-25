@@ -11,8 +11,12 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
     }
     
     if (number == 11 || number == 13 || number == 14 || number == 16 || number == 18 || number == 19) {
-        if (lineNum >= 3 && lineNum <= 5) {
-            cout << "*";
+        if (lineNum >= 3 && lineNum <= 5 && owner) {
+                if (combo) {
+                    cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
+                } else {
+                    cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
+                }
         } else {
             cout << " ";
         }
@@ -52,7 +56,7 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             for (int i = 0; i < improvementLevel; i++) {
                 s.append("*");
             }
-            cout << getColour() << setw(7) << left << s << COLOUR_DEFAULT;
+            cout << getColour() << setw(7) << left << s << COLOUR_DEFAULT_BACKGROUND;
             
             if (number == 11 || number == 13 || number == 16 ||number == 18 || number == 19) {
                 bar71();
@@ -98,8 +102,9 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             string s = "";
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
                 s.append(string(1, (*it)->getPiece()));
+                s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
             }
-            cout << "|" << setw(7) << left << s;
+            cout << "|" << setw(7) << left << s << COLOUR_DEFAULT_FOREGROUND;
             
             if (number == 11 || number == 13 || number == 14 || number == 18 || number == 19) {
                 bar71();
@@ -114,10 +119,12 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
     
     if ((number >= 30 && number <= 39)) {
         cout << "|";
-        if (lineNum >= 3 && lineNum <= 5) {
-            cout << "*";
-        } else {
-            cout << " ";
+        if (lineNum >= 3 && lineNum <= 5 && owner) {
+            if (combo) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
+            } else {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
+            }
         }
     }
 }

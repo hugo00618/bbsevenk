@@ -11,8 +11,6 @@ class Player;
 
 class Property: public Block {
 protected:
-    const string COLOUR_DEFAULT = "\e[49m";
-    
     Player *owner;
     int purchaseCost;
     int baseTuition;

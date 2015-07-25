@@ -2,6 +2,10 @@
 
 using namespace std;
 
+Player::Player():cash(INITIAL_BALANCE) {
+    
+}
+
 int Player::rollDice() {
     srand(time(NULL));
     return rand() % 6 + 1;
@@ -31,25 +35,40 @@ int Player::getNumber() {
     return number;
 }
 
-string Player::getColour() {
-    string colour = "\e[48;5;";
+string Player::getColour(int type) {
+    string colour;
+    
+    if (type == COLOUR_TYPE_BACKGROUND) {
+        colour = "\e[48;5;";
+    } else if ( type == COLOUR_TYPE_FOREGROUND) {
+        colour = "\e[38;5;";
+    }
+    
     switch (number) {
         case 1:
             colour.append("160");
+            break;
         case 2:
-            colour.append("202");
+            colour.append("112");
+            break;
         case 3:
             colour.append("220");
+            break;
         case 4:
-            colour.append("112");
+            colour.append("55");
+            break;
         case 5:
-            colour.append("80");
+            colour.append("202");
+            break;
         case 6:
             colour.append("38");
+            break;
         case 7:
-            colour.append("55");
+            colour.append("146");
+            break;
         default:
             colour.append("15");
+            break;
     }
     colour.append("m");
     return colour;

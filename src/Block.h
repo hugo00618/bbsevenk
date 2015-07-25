@@ -10,6 +10,9 @@ using namespace std;
 
 class Player;
 
+const string COLOUR_DEFAULT_BACKGROUND = "\e[49m";
+const string COLOUR_DEFAULT_FOREGROUND = "\e[39m";
+
 class Block {
 protected:
     string name;

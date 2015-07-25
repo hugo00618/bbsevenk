@@ -20,9 +20,9 @@
 
 using namespace std;
 
-class Game {
-    static const int MAX_NUM_OF_PLAYERS = 7;
+const int MAX_NUM_OF_PLAYERS = 7;
 
+class Game {
     Block **gameboard;
     int numOfPlayers;
     Player *players;
