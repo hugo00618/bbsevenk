@@ -91,7 +91,6 @@ Game::Game() {
         istringstream ss(tmpS);
         
         if (ss >> numOfPlayers && numOfPlayers >= 2 && numOfPlayers <= MAX_NUM_OF_PLAYERS) {
-            players = new Player[numOfPlayers];
             break;
         } else {
             printBoard(myWindowWidth, myWindowHeight);
@@ -103,11 +102,12 @@ Game::Game() {
     
     printBoard(myWindowWidth, myWindowHeight);
     for (int i = 0; i < numOfPlayers; i++) {
+        Player p = Player();
         cout << "Player " << i+1 << "'s name: ";
         string tmpS;
         cin >> tmpS;
-        players[i].setName(tmpS);
-        players[i].setNumber(i+1);
+        p.setName(tmpS);
+        p.setNumber(i+1);
         printBoard(myWindowWidth, myWindowHeight);
         
         while (true) {
@@ -117,11 +117,10 @@ Game::Game() {
             }
             
             char tmpC;
-            cout << players[i].getName() << "'s piece: ";
+            cout << p.getName() << "'s piece: ";
             cin >> tmpS;
             istringstream ss(tmpS);
             ss >> tmpC;
-            players[i].setPiece(tmpC);
             
             if (pieces[tmpC] == "") {
                 printBoard(myWindowWidth, myWindowHeight);
@@ -130,7 +129,7 @@ Game::Game() {
                 cin.clear();
                 cin.ignore();
             } else {
-                players[i].setPiece(tmpC);
+                p.setPiece(tmpC);
                 pieces.erase(tmpC);
                 printBoard(myWindowWidth, myWindowHeight);
                 break;
@@ -138,7 +137,7 @@ Game::Game() {
         }
         
         while (true) {
-            cout << "Is " << players[i].getName() << " a robot player? (y/n): ";
+            cout << "Is " << p.getName() << " a robot player? (y/n): ";
             cin >> tmpS;
             if (tmpS == "y") {
                 while (true) {
@@ -164,7 +163,9 @@ Game::Game() {
             }
         }
         
-        gameboard[39]->addLander(&players[i]);
+        gameboard[39]->addLander(&p);
+        players.push_back(&p);
+        
         printBoard(myWindowWidth, myWindowHeight);
     }
     

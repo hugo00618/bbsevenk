@@ -22,8 +22,10 @@ class Player {
     vector<Property*> properties;
     int cash;
     int position;
+    bool myTurn;
     int rollingTime;
     int doubleCount;
+    
     int rollDice();
 public:
     Player();

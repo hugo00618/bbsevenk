@@ -58,12 +58,14 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             }
             cout << getColour() << setw(7) << left << s << COLOUR_DEFAULT_BACKGROUND;
             
-            if (number == 11 || number == 13 || number == 16 ||number == 18 || number == 19) {
+            if (number == 11 || number == 13 || number == 16 || number == 19) {
                 bar71();
             } else if (number == 14) {
                 bar14();
                 cout << "|  $$$$$$$/ $$$$$$$/ $$/      $$/   $$/   |";
                 repeat(" ", 14);
+            } else if (number == 18) {
+                
             }
             break;
         }
@@ -100,11 +102,15 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
         }
         case 5: {
             string s = "";
+            int count = 0;
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
-                s.append(string(1, (*it)->getPiece()));
+                count++;
                 s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
+                s.append(string(1, (*it)->getPiece()));
             }
-            cout << "|" << setw(7) << left << s << COLOUR_DEFAULT_FOREGROUND;
+            
+            cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
+            repeat(" ", 7-count);
             
             if (number == 11 || number == 13 || number == 14 || number == 18 || number == 19) {
                 bar71();

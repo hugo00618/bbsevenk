@@ -25,7 +25,7 @@ const int MAX_NUM_OF_PLAYERS = 7;
 class Game {
     Block **gameboard;
     int numOfPlayers;
-    Player *players;
+    vector<Player*> players;
 
     struct Piece {
         char symbol;

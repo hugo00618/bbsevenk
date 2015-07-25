@@ -60,11 +60,15 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
         }
         case 5: {
             string s = "";
+            int count = 0;
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
-                s.append(string(1, (*it)->getPiece()));
+                count++;
                 s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
+                s.append(string(1, (*it)->getPiece()));
             }
-            cout << "|" << setw(7) << left << s << "\e[49m";
+            
+            cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
+            repeat(" ", 7-count);
             if (number == 12) {
                 bar71();
             }

@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Player::Player():cash(INITIAL_BALANCE) {
+Player::Player():cash(INITIAL_BALANCE), position(0), myTurn(false) {
     
 }
 
