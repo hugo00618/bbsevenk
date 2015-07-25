@@ -83,9 +83,8 @@ Game::Game() {
     sleep(3);
     
     // setup
-    clearScreen(myWindowHeight);
+    printBoard(myWindowWidth, myWindowHeight);
     while (true) {
-        printBoard(myWindowWidth, myWindowHeight);
         cout << "Number of players (2-" << MAX_NUM_OF_PLAYERS << "): ";
         string tmpS;
         cin >> tmpS;
@@ -93,22 +92,23 @@ Game::Game() {
         
         if (ss >> numOfPlayers && numOfPlayers >= 2 && numOfPlayers <= MAX_NUM_OF_PLAYERS) {
             players = new Player[numOfPlayers];
-            clearScreen(myWindowHeight);
             break;
         } else {
-            clearScreen(myWindowHeight);
+            printBoard(myWindowWidth, myWindowHeight);
             cout << "Please enter a number between 2 and " << MAX_NUM_OF_PLAYERS << "." << endl;
             cin.clear();
             cin.ignore();
         }
     }
     
+    printBoard(myWindowWidth, myWindowHeight);
     for (int i = 0; i < numOfPlayers; i++) {
         cout << "Player " << i+1 << "'s name: ";
         string tmpS;
         cin >> tmpS;
         players[i].setName(tmpS);
-        clearScreen(myWindowHeight);
+        players[i].setNumber(i+1);
+        printBoard(myWindowWidth, myWindowHeight);
         
         while (true) {
             cout << "Available pieces:" << endl;
@@ -124,7 +124,7 @@ Game::Game() {
             players[i].setPiece(tmpC);
             
             if (pieces[tmpC] == "") {
-                clearScreen(myWindowHeight);
+                printBoard(myWindowWidth, myWindowHeight);
                 cout << tmpS << " is not available, please try again." << endl;
                 pieces.erase(tmpC);
                 cin.clear();
@@ -132,7 +132,7 @@ Game::Game() {
             } else {
                 players[i].setPiece(tmpC);
                 pieces.erase(tmpC);
-                clearScreen(myWindowHeight);
+                printBoard(myWindowWidth, myWindowHeight);
                 break;
             }
         }
@@ -148,26 +148,27 @@ Game::Game() {
                     int easinessLv;
                     if (ss >> easinessLv && easinessLv >= 1 && easinessLv <= 3) {
                         // create a robot player
-                        clearScreen(myWindowHeight);
+                        printBoard(myWindowWidth, myWindowHeight);
                         break;
                     } else {
-                        clearScreen(myWindowHeight);
+                        printBoard(myWindowWidth, myWindowHeight);
                         cout << "Please enter a number from 1 to 3." << endl;
                     }
                 }
-                clearScreen(myWindowHeight);
                 break;
             } else if (tmpS == "n") {
-                clearScreen(myWindowHeight);
                 break;
             } else {
-                clearScreen(myWindowHeight);
+                printBoard(myWindowWidth, myWindowHeight);
                 cout << "Please enter either y or n." << endl;
             }
         }
         
         gameboard[39]->addLander(&players[i]);
+        printBoard(myWindowWidth, myWindowHeight);
     }
+    
+        dynamic_cast<Property*>(gameboard[1])->setOwner(players[0]);
     
     printBoard(myWindowWidth, myWindowHeight);
     
@@ -196,17 +197,14 @@ void Game::printBoard(int myWindowWidth, int myWindowHeight) {
     
     cout << setw(myLeftMargin+1) << "";
     for (int i = 0; i < 11; i++) {
-        cout << "  ";
         if (dynamic_cast<NonProperty*>(gameboard[i])) {
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 7; j++) {
                 cout << " ";
             }
         } else {
-            for (int j = 0; j < 5; j++) {
-                cout << "*";
-            }
+            Property *p = dynamic_cast<Property*>(gameboard[i]);
+            p->printOwnership();
         }
-        cout << " ";
     }
     cout << endl;
     
@@ -285,17 +283,14 @@ void Game::printBoard(int myWindowWidth, int myWindowHeight) {
     
     cout << setw(myLeftMargin+1) << "";
     for (int i = 29; i < 40; i++) {
-        cout << "  ";
         if (dynamic_cast<NonProperty*>(gameboard[i])) {
-            for (int j = 0; j < 5; j++) {
+            for (int j = 0; j < 7; j++) {
                 cout << " ";
             }
         } else {
-            for (int j = 0; j < 5; j++) {
-                cout << "*";
-            }
+            Property *p = dynamic_cast<Property*>(gameboard[i]);
+            p->printOwnership();
         }
-        cout << " ";
     }
     cout << endl;
     

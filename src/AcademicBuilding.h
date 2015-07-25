@@ -6,7 +6,7 @@
 
 #include "Property.h"
 
-class AcademicBuilding: public Property {
+class AcademicBuilding: public Property {    
     int improvementCost;
     int improvementLevel;
     

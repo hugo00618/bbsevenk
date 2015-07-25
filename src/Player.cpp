@@ -23,6 +23,38 @@ char Player::getPiece() {
     return piece;
 }
 
+void Player::setNumber(int number) {
+    this->number = number;
+}
+
+int Player::getNumber() {
+    return number;
+}
+
+string Player::getColour() {
+    string colour = "\e[48;5;";
+    switch (number) {
+        case 1:
+            colour.append("160");
+        case 2:
+            colour.append("202");
+        case 3:
+            colour.append("220");
+        case 4:
+            colour.append("112");
+        case 5:
+            colour.append("80");
+        case 6:
+            colour.append("38");
+        case 7:
+            colour.append("55");
+        default:
+            colour.append("15");
+    }
+    colour.append("m");
+    return colour;
+}
+
 void Player::roll() {
     rollingTime--;
     int firstDice, secondDice, sum;

@@ -52,8 +52,7 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             for (int i = 0; i < improvementLevel; i++) {
                 s.append("*");
             }
-            string colour = getColour();
-            cout << colour << setw(7) << left << s << "\e[49m";
+            cout << getColour() << setw(7) << left << s << COLOUR_DEFAULT;
             
             if (number == 11 || number == 13 || number == 16 ||number == 18 || number == 19) {
                 bar71();
@@ -65,11 +64,8 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             break;
         }
         case 3: {
-            string placeHolder = combo? "***": "---";
             cout << "|";
-            cout << placeHolder;
-            cout << (owner? string(1,owner->getPiece()): "-");
-            cout << placeHolder;
+            repeat("-", 7);
             
             if (number == 11 || number == 13 ||number == 18 || number == 19) {
                 bar71();
@@ -118,11 +114,11 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
     
     if ((number >= 30 && number <= 39)) {
         cout << "|";
-            if (lineNum >= 3 && lineNum <= 5) {
-                cout << "*";
-            } else {
-                cout << " ";
-            }
+        if (lineNum >= 3 && lineNum <= 5) {
+            cout << "*";
+        } else {
+            cout << " ";
+        }
     }
 }
 

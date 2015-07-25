@@ -11,14 +11,18 @@ class Player;
 
 class Property: public Block {
 protected:
+    const string COLOUR_DEFAULT = "\e[49m";
+    
     Player *owner;
     int purchaseCost;
     int baseTuition;
     bool combo;
 public:
     Property(string name, int number, int purchaseCost, int bastTuition);
+    void setOwner(Player &p);
     int getPurchaseCost();
     virtual int getTuition(int steps) = 0;
+    void printOwnership();
 };
 
 #endif

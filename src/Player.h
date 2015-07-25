@@ -13,6 +13,7 @@ using namespace std;
 class Player {
     string name;
     char piece;
+    int number;
     vector<Property*> properties;
     int cash;
     int position;
@@ -24,6 +25,9 @@ public:
     string getName();
     void setPiece(char piece);
     char getPiece();
+    void setNumber(int number);
+    int getNumber();
+    string getColour();
     void roll();
     void next();
     void trade(string tradeWith, vector<Property*> myProperties, vector<Property*> othersProperties);
