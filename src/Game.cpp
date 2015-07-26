@@ -4,7 +4,7 @@ using namespace std;
 
 void clearScreen(int windowHeight);
 
-Game::Game() {
+Game::Game(): mib(63, 14) {
     // window
     struct winsize myWindowsSize;
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &myWindowsSize);
@@ -102,12 +102,12 @@ Game::Game() {
     
     printBoard(myWindowWidth, myWindowHeight);
     for (int i = 0; i < numOfPlayers; i++) {
-        Player p = Player();
+        Player *p = new Player();
         cout << "Player " << i+1 << "'s name: ";
         string tmpS;
         cin >> tmpS;
-        p.setName(tmpS);
-        p.setNumber(i+1);
+        p->setName(tmpS);
+        p->setNumber(i+1);
         printBoard(myWindowWidth, myWindowHeight);
         
         while (true) {
@@ -117,7 +117,7 @@ Game::Game() {
             }
             
             char tmpC;
-            cout << p.getName() << "'s piece: ";
+            cout << p->getName() << "'s piece: ";
             cin >> tmpS;
             istringstream ss(tmpS);
             ss >> tmpC;
@@ -129,7 +129,7 @@ Game::Game() {
                 cin.clear();
                 cin.ignore();
             } else {
-                p.setPiece(tmpC);
+                p->setPiece(tmpC);
                 pieces.erase(tmpC);
                 printBoard(myWindowWidth, myWindowHeight);
                 break;
@@ -137,7 +137,7 @@ Game::Game() {
         }
         
         while (true) {
-            cout << "Is " << p.getName() << " a robot player? (y/n): ";
+            cout << "Is " << p->getName() << " a robot player? (y/n): ";
             cin >> tmpS;
             if (tmpS == "y") {
                 while (true) {
@@ -163,8 +163,8 @@ Game::Game() {
             }
         }
         
-        gameboard[39]->addLander(&p);
-        players.push_back(&p);
+        gameboard[39]->addLander(p);
+        players.push_back(p);
         
         printBoard(myWindowWidth, myWindowHeight);
     }
@@ -207,67 +207,67 @@ void Game::printBoard(int myWindowWidth, int myWindowHeight) {
     
     for (int i = 0; i < 5; i++) {
         for (int j = 0; j < 11; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 11; j < 13; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 13; j < 15; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 15; j < 17; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 17; j < 19; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 19; j < 21; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 21; j < 23; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 23; j < 25; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 25; j < 27; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 27; j < 29; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }
     for (int i = 0; i < 5; i++) {
         for (int j = 29; j < 40; j++) {
-            gameboard[j]->print(i+1, myLeftMargin, myTopMargin);
+            gameboard[j]->print(i+1, myLeftMargin, myTopMargin, players, mib);
         }
         cout << endl;
     }

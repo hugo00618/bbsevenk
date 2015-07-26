@@ -6,6 +6,8 @@
 #include <vector>
 #include <iomanip>
 
+#include "MyInfoBoard.h"
+
 using namespace std;
 
 class Player;
@@ -27,7 +29,7 @@ protected:
     void bar7bar71();
 public:
     Block(string name, int number);
-    virtual void print(int lineNum, int leftMargin, int topMargin);
+    virtual void print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib);
     void addLander(Player *p);
     void removeLander(Player *p);
 };

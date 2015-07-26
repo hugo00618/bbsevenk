@@ -9,7 +9,7 @@ int Gym::getTuition(int steps = 0) {
     return 0;
 }
 
-void Gym::print(int lineNum, int leftMargin, int topMargin) {
+void Gym::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
     if (number >= 10 && number <= 20) {
         cout << setw(leftMargin) << "";
     }
@@ -29,7 +29,14 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
     switch (lineNum) {
         case 1: {
             if (number == 12) {
-                bar7bar71();
+                if (mib.getInfoBoard().size() > 5) {
+                    bar7();
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(5);
+                } else {
+                    bar7bar71();
+                }
             } else {
                 repeat("_", 8);
             }
@@ -39,7 +46,13 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
         case 2: {
             cout << "|" << setw(7) << left << name;
             if (number == 12) {
-                bar71();
+                if (mib.getInfoBoard().size() > 6) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(6);
+                } else {
+                    bar71();
+                }
             }
             break;
         }
@@ -47,14 +60,26 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
             cout << "|";
             repeat(" ", 7);
             if (number == 12) {
-                bar71();
+                if (mib.getInfoBoard().size() > 7) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(7);
+                } else {
+                    bar71();
+                }
             }
             break;
         }
         case 4: {
             cout << setw(8) << left << "|";
             if (number == 12) {
-                bar71();
+                if (mib.getInfoBoard().size() > 8) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(8);
+                } else {
+                    bar71();
+                }
             }
             break;
         }
@@ -70,7 +95,13 @@ void Gym::print(int lineNum, int leftMargin, int topMargin) {
             cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
             repeat(" ", 7-count);
             if (number == 12) {
-                bar71();
+                if (mib.getInfoBoard().size() > 9) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(9);
+                } else {
+                    bar71();
+                }
             }
             break;
         }

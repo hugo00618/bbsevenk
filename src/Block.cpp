@@ -36,7 +36,7 @@ void Block::bar7bar71() {
     bar71();
 }
 
-void Block::print(int lineNum, int leftMargin, int topMargin) {
+void Block::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
     if (number >= 10 && number <= 20) {
         cout << setw(leftMargin+1) << "";
     }
@@ -44,7 +44,40 @@ void Block::print(int lineNum, int leftMargin, int topMargin) {
     switch (lineNum) {
         case 1:
             if (number == 17) {
-                bar7bar71();
+                bar7();
+                cout << "|";
+                repeat(" ", 7);
+                if (players.size() > 4) {
+                    cout << players.at(4)->getColour(COLOUR_TYPE_FOREGROUND);
+                    if (players.at(4)->getMyTurn()) {
+                        cout << "> ";
+                    } else {
+                        cout << "  ";
+                    }
+                    cout << players.at(4)->getPiece() << " ";
+                    cout << setw(12) << left << players.at(4)->getName();
+                    cout << "$ " << setw(4) << players.at(4)->getCash();
+                    cout << COLOUR_DEFAULT_FOREGROUND;
+                    repeat(" ", 13);
+                } else {
+                    repeat(" ", 35);
+                }
+                
+                if (players.size() > 5) {
+                    cout << players.at(5)->getColour(COLOUR_TYPE_FOREGROUND);
+                    if (players.at(5)->getMyTurn()) {
+                        cout << "> ";
+                    } else {
+                        cout << "  ";
+                    }
+                    cout << players.at(5)->getPiece() << " ";
+                    cout << setw(12) << left << players.at(5)->getName();
+                    cout << "$ " << setw(4) << players.at(5)->getCash();
+                    cout << COLOUR_DEFAULT_FOREGROUND;
+                    repeat(" ", 7);
+                } else {
+                    repeat(" ", 29);
+                }
             } else if (number == 20) {
                 repeat("_", 9);
             } else if (number == 0 || number == 10 || number == 33 || number == 35 || number == 36 || number == 38) {
@@ -115,6 +148,28 @@ void Block::print(int lineNum, int leftMargin, int topMargin) {
                     break;
                 case 0:
                     cout << setw(7) << left << "OSAP";
+                    break;
+                case 17:
+                    repeat(" ", 7);
+                    cout << "|";
+                    repeat(" ", 7);
+                    if (players.size() > 6) {
+                        cout << players.at(6)->getColour(COLOUR_TYPE_FOREGROUND);
+                        if (players.at(6)->getMyTurn()) {
+                            cout << "> ";
+                        } else {
+                            cout << "  ";
+                        }
+                        cout << players.at(6)->getPiece() << " ";
+                        cout << setw(12) << left << players.at(6)->getName();
+                        cout << "$ " << setw(4) << players.at(6)->getCash();
+                        cout << COLOUR_DEFAULT_FOREGROUND;
+                        repeat(" ", 13);
+                    } else {
+                        repeat(" ", 35);
+                    }
+                    
+                    repeat(" ", 29);
                     break;
                 default:
                     cout << setw(7) << "";

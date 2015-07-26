@@ -9,7 +9,7 @@ int Residence::getTuition(int steps) {
     return 0;
 }
 
-void Residence::print(int lineNum, int leftMargin, int topMargin) {
+void Residence::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
     if (number >= 10 && number <= 20) {
         cout << setw(leftMargin) << "";
     }

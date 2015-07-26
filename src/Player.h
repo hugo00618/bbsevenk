@@ -35,6 +35,9 @@ public:
     char getPiece();
     void setNumber(int number);
     int getNumber();
+    int getCash();
+    void setMyTurn(bool myTurn);
+    bool getMyTurn();
     string getColour(int type);
     void roll();
     void next();

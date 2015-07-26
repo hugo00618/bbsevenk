@@ -17,6 +17,7 @@
 #include "AcademicBuilding.h"
 #include "Residence.h"
 #include "Gym.h"
+#include "MyInfoBoard.h"
 
 using namespace std;
 
@@ -26,6 +27,7 @@ class Game {
     Block **gameboard;
     int numOfPlayers;
     vector<Player*> players;
+    MyInfoBoard mib;
 
     struct Piece {
         char symbol;

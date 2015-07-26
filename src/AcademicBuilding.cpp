@@ -5,18 +5,18 @@ AcademicBuilding::AcademicBuilding(string name, int number, int purchaseCost, in
     
 }
 
-void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
+void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
     if (number >= 10 && number <= 20) {
         cout << setw(leftMargin) << "";
     }
     
     if (number == 11 || number == 13 || number == 14 || number == 16 || number == 18 || number == 19) {
         if (lineNum >= 3 && lineNum <= 5 && owner) {
-                if (combo) {
-                    cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
-                } else {
-                    cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
-                }
+            if (combo) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
+            } else {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
+            }
         } else {
             cout << " ";
         }
@@ -28,8 +28,26 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
                 bar7bar14();
                 cout << "|  $$    $$/$$    $$//$$/     $$ | $$  |  |";
                 repeat(" ", 14);
-            } else if (number == 11 || number == 13 || number == 16 || number == 18) {
+            } else if (number == 16 || number == 18) {
                 bar7bar71();
+            } else if (number == 11) {
+                if (mib.getInfoBoard().size() > 10) {
+                    bar7();
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(10);
+                } else {
+                    bar7bar71();
+                }
+            } else if (number == 13) {
+                if (mib.getInfoBoard().size() > 0) {
+                    bar7();
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(0);
+                } else {
+                    bar7bar71();
+                }
             } else if (number == 19) {
                 bar7();
                 cout << "|";
@@ -58,14 +76,62 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             }
             cout << getColour() << setw(7) << left << s << COLOUR_DEFAULT_BACKGROUND;
             
-            if (number == 11 || number == 13 || number == 16 || number == 19) {
+            if (number == 16 || number == 19) {
                 bar71();
+            } else if (number == 11) {
+                if (mib.getInfoBoard().size() > 11) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(11);
+                } else {
+                    bar71();
+                }
+            } else if (number == 13) {
+                if (mib.getInfoBoard().size() > 1) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(1);
+                } else {
+                    bar71();
+                }
             } else if (number == 14) {
                 bar14();
                 cout << "|  $$$$$$$/ $$$$$$$/ $$/      $$/   $$/   |";
                 repeat(" ", 14);
             } else if (number == 18) {
+                cout << "|";
+                repeat(" ", 7);
+                if (players.size() > 0) {
+                    cout << players.at(0)->getColour(COLOUR_TYPE_FOREGROUND);
+                    if (players.at(0)->getMyTurn()) {
+                        cout << "> ";
+                    } else {
+                        cout << "  ";
+                    }
+                    cout << players.at(0)->getPiece() << " ";
+                    cout << setw(12) << left << players.at(0)->getName();
+                    cout << "$ " << setw(4) << players.at(0)->getCash();
+                    cout << COLOUR_DEFAULT_FOREGROUND;
+                    repeat(" ", 13);
+                } else {
+                    repeat(" ", 35);
+                }
                 
+                if (players.size() > 1) {
+                    cout << players.at(1)->getColour(COLOUR_TYPE_FOREGROUND);
+                    if (players.at(1)->getMyTurn()) {
+                        cout << "> ";
+                    } else {
+                        cout << "  ";
+                    }
+                    cout << players.at(1)->getPiece() << " ";
+                    cout << setw(12) << left << players.at(1)->getName();
+                    cout << "$ " << setw(4) << players.at(1)->getCash();
+                    cout << COLOUR_DEFAULT_FOREGROUND;
+                    repeat(" ", 7);
+                } else {
+                    repeat(" ", 29);
+                }
             }
             break;
         }
@@ -73,8 +139,24 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             cout << "|";
             repeat("-", 7);
             
-            if (number == 11 || number == 13 ||number == 18 || number == 19) {
+            if (number == 18 || number == 19) {
                 bar71();
+            } else if (number == 11) {
+                if (mib.getInfoBoard().size() > 12) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(12);
+                } else {
+                    bar71();
+                }
+            } else if (number == 13) {
+                if (mib.getInfoBoard().size() > 2) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(2);
+                } else {
+                    bar71();
+                }
             } else if (number == 14) {
                 bar14();
                 cout << "|";
@@ -91,12 +173,62 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
         case 4: {
             cout << "|" << setw(7) << left << name;
             
-            if (number == 11 || number == 13 || number == 14 || number == 18 || number == 19) {
+            if (number == 14 || number == 19) {
                 bar71();
+            } else if (number == 11) {
+                if (mib.getInfoBoard().size() > 13) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(13);
+                } else {
+                    bar71();
+                }
+            } else if (number == 13) {
+                if (mib.getInfoBoard().size() > 3) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(3);
+                } else {
+                    bar71();
+                }
             } else if (number == 16) {
                 bar14();
                 cout << "|   _______  _______  ________ __    __   |";
                 repeat(" ", 14);
+            } else if (number == 18) {
+                cout << "|";
+                repeat(" ", 7);
+                if (players.size() > 2) {
+                    cout << players.at(2)->getColour(COLOUR_TYPE_FOREGROUND);
+                    if (players.at(2)->getMyTurn()) {
+                        cout << "> ";
+                    } else {
+                        cout << "  ";
+                    }
+                    cout << players.at(2)->getPiece() << " ";
+                    cout << setw(12) << left << players.at(2)->getName();
+                    cout << "$ " << setw(4) << players.at(2)->getCash();
+                    cout << COLOUR_DEFAULT_FOREGROUND;
+                    repeat(" ", 13);
+                } else {
+                    repeat(" ", 35);
+                }
+                
+                if (players.size() > 3) {
+                    cout << players.at(3)->getColour(COLOUR_TYPE_FOREGROUND);
+                    if (players.at(3)->getMyTurn()) {
+                        cout << "> ";
+                    } else {
+                        cout << "  ";
+                    }
+                    cout << players.at(3)->getPiece() << " ";
+                    cout << setw(12) << left << players.at(3)->getName();
+                    cout << "$ " << setw(4) << players.at(3)->getCash();
+                    cout << COLOUR_DEFAULT_FOREGROUND;
+                    repeat(" ", 7);
+                } else {
+                    repeat(" ", 29);
+                }
             }
             break;
         }
@@ -114,6 +246,14 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin) {
             
             if (number == 11 || number == 13 || number == 14 || number == 18 || number == 19) {
                 bar71();
+            } else if (number == 13) {
+                if (mib.getInfoBoard().size() > 4) {
+                    cout << "|";
+                    repeat(" ", 4);
+                    cout << setw(67) << mib.getInfoBoard().at(4);
+                } else {
+                    bar71();
+                }
             } else if (number == 16) {
                 bar14();
                 cout << "|  /       \\/       \\/        /  |  /  |  |";

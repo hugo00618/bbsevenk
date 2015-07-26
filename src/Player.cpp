@@ -35,6 +35,18 @@ int Player::getNumber() {
     return number;
 }
 
+int Player::getCash() {
+    return cash;
+}
+
+void Player::setMyTurn(bool myTurn) {
+    this->myTurn = myTurn;
+}
+
+bool Player::getMyTurn() {
+    return myTurn;
+}
+
 string Player::getColour(int type) {
     string colour;
     

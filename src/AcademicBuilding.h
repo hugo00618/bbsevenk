@@ -13,7 +13,7 @@ class AcademicBuilding: public Property {
     string getColour();
 public:
     AcademicBuilding(string name, int number, int purchaseCost, int bastTuition, int improvementCost);
-    void print(int lineNum, int leftMargin, int topMargin);
+    void print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib);
     int getTuition(int steps);
     int getImprovementCost();
 };
