@@ -5,6 +5,10 @@ Block::Block(string name, int number): name(name), number(number) {
     
 }
 
+void Block::setName(string name) {
+    this->name = name;
+}
+
 void Block::repeat(string s, int times) {
     for (int i = 0; i < times; i++) {
         cout << s;
@@ -191,7 +195,11 @@ void Block::print(int lineNum, int leftMargin, int topMargin, vector<Player*> pl
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
                 count++;
                 s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
+                if ((*it)->getMyTurn()) {
+                    s.append(STYLE_BLINK);
+                }
                 s.append(string(1, (*it)->getPiece()));
+                s.append(STYLE_DEFAULT);
             }
             
             cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
@@ -208,6 +216,8 @@ void Block::print(int lineNum, int leftMargin, int topMargin, vector<Player*> pl
 }
 
 void Block::addLander(Player *p) {
+    p->getLandsOn()->removeLander(p);
+    p->setLandsOn(this);
     landers.push_back(p);
 }
 
@@ -220,3 +230,14 @@ void Block::removeLander(Player *p) {
     }
 }
 
+string Block::getName() {
+    return name;
+}
+
+int Block::getNumber() {
+    return number;
+}
+
+vector<Player*> *Block::gameGetLanders() {
+    return &landers;
+}

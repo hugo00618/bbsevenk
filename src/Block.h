@@ -13,13 +13,19 @@ using namespace std;
 class Player;
 
 const string COLOUR_DEFAULT_BACKGROUND = "\e[49m";
+
 const string COLOUR_DEFAULT_FOREGROUND = "\e[39m";
+
+const string STYLE_BLINK = "\e[5m";
+const string STYLE_DEFAULT = "\e[0m";
 
 class Block {
 protected:
     string name;
     int number;
     vector<Player*> landers;
+    
+    void removeLander(Player *p);
     
     void repeat(string s, int times);
     void bar7();
@@ -29,9 +35,14 @@ protected:
     void bar7bar71();
 public:
     Block(string name, int number);
-    virtual void print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib);
+    
+    void setName(string name);
     void addLander(Player *p);
-    void removeLander(Player *p);
+    string getName();
+    int getNumber();
+    vector<Player*> *gameGetLanders();
+    
+    virtual void print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib);
 };
 
 #endif

@@ -1,12 +1,16 @@
 #include "Gym.h"
 #include "Player.h"
 
-Gym::Gym(string name, int number): Property(name, number, 150, 0) {
+Gym::Gym(string name, int number): Property(name, number, 150) {
     
 }
 
 int Gym::getTuition(int steps = 0) {
-    return 0;
+    if (combo) {
+        return steps * 10;
+    } else {
+        return steps * 4;
+    }
 }
 
 void Gym::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
@@ -16,7 +20,9 @@ void Gym::print(int lineNum, int leftMargin, int topMargin, vector<Player*> play
     
     if (number == 12) {
         if (lineNum >= 3 && lineNum <= 5 && owner) {
-            if (combo) {
+            if (mortgaged) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
+            } else if (combo) {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
             } else {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
@@ -89,7 +95,11 @@ void Gym::print(int lineNum, int leftMargin, int topMargin, vector<Player*> play
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
                 count++;
                 s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
+                if ((*it)->getMyTurn()) {
+                    s.append(STYLE_BLINK);
+                }
                 s.append(string(1, (*it)->getPiece()));
+                s.append(STYLE_DEFAULT);
             }
             
             cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;

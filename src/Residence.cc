@@ -1,12 +1,30 @@
 #include "Residence.h"
 #include "Player.h"
 
-Residence::Residence(string name, int number): Property(name, number, 200, 25) {
+Residence::Residence(string name, int number): Property(name, number, 200) {
     
 }
 
-int Residence::getTuition(int steps) {
-    return 0;
+int Residence::getTuition(int steps = 0) {
+    if (combo) {
+        return 200;
+    }
+    
+    int numberOfResidenceOwnerOwned  = 0;
+    for (vector<Property*>::iterator it = owner->getProperties()->begin(); it != owner->getProperties()->end(); it++) {
+        if (dynamic_cast<Residence*>(*it)) {
+            numberOfResidenceOwnerOwned++;
+        }
+    }
+    
+    switch (numberOfResidenceOwnerOwned) {
+        case 1:
+            return 25;
+        case 2:
+            return 50;
+        default:
+            return 100;
+    }
 }
 
 void Residence::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
@@ -16,7 +34,9 @@ void Residence::print(int lineNum, int leftMargin, int topMargin, vector<Player*
     
     if (number == 15) {
         if (lineNum >= 3 && lineNum <= 5 && owner) {
-            if (combo) {
+            if (mortgaged) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "M" << COLOUR_DEFAULT_BACKGROUND;
+            } else if (combo) {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
             } else {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
@@ -74,7 +94,11 @@ void Residence::print(int lineNum, int leftMargin, int topMargin, vector<Player*
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
                 count++;
                 s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
+                if ((*it)->getMyTurn()) {
+                    s.append(STYLE_BLINK);
+                }
                 s.append(string(1, (*it)->getPiece()));
+                s.append(STYLE_DEFAULT);
             }
             
             cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
@@ -91,7 +115,9 @@ void Residence::print(int lineNum, int leftMargin, int topMargin, vector<Player*
     if (number == 35) {
         cout << "|";
         if (lineNum >= 3 && lineNum <= 5 && owner) {
-            if (combo) {
+            if (mortgaged) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "M" << COLOUR_DEFAULT_BACKGROUND;
+            } else if (combo) {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
             } else {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;

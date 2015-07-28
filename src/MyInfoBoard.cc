@@ -7,15 +7,17 @@ MyInfoBoard::MyInfoBoard(int width, int height): width(width), height(height) {
 void MyInfoBoard::separatePush(string s) {
     stringstream ss(s);
     string line, word;
-    
+
+    ss >> line;
     while (ss >> word) {
-        if (line.length() + word.length() > width - 1) {
+        if (line.length() + word.length() + 1 > width) {
             push(line);
             line = "    " + word;
         } else {
-            line = " " + word;
+            line += " " + word;
         }
     }
+    push(line);
 }
 
 void MyInfoBoard::push(string s) {
@@ -23,11 +25,9 @@ void MyInfoBoard::push(string s) {
         separatePush(s);
     } else {
         if (infoBoard.end() - infoBoard.begin() >= height) {
-            for (vector<string>::iterator it = infoBoard.begin() + 1; it != infoBoard.end(); it++) {
-                *(it-1) = *it;
-            }
+            infoBoard.erase(infoBoard.begin());
         }
-        *(infoBoard.end() - 1) = s;
+        infoBoard.push_back(s);
     }
 }
 

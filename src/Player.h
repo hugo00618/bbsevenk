@@ -5,10 +5,14 @@
 #include <vector>
 #include <cstdlib>
 #include <ctime>
+#include <sstream>
 
 #include "Property.h"
+#include "RurCup.h"
 
 using namespace std;
+
+class Game;
 
 const int INITIAL_BALANCE = 1500;
 
@@ -19,35 +23,81 @@ class Player {
     string name;
     char piece;
     int number;
+    
     vector<Property*> properties;
+    vector<RurCup*> rurCups;
     int cash;
-    int position;
+    Block *landsOn;
+    bool quit;
+    
+    int owing;
+    Player *renter;
+    
+    bool forfeited;
+    
+    Game *game;
     bool myTurn;
+    int inJail;
     int rollingTime;
     int doubleCount;
     
     int rollDice();
+    void getOutOfJail();
 public:
     Player();
+    
     void setName(string name);
     string getName();
+    
     void setPiece(char piece);
     char getPiece();
+    
     void setNumber(int number);
     int getNumber();
+    
+    void setCash(int amount);
+    void addCash(int amount);
     int getCash();
-    void setMyTurn(bool myTurn);
+    
+    void addProperty(Property *p);
+    vector<Property*> *getProperties();
+    int getNetWorth();
+    
+    void addCup(RurCup *rc);
+    vector<RurCup*> *getRurCups();
+    
+    void setLandsOn(Block *landsOn);
+    Block *getLandsOn();
+    
+    void itIsMyTurn();
     bool getMyTurn();
+    
+    bool getQuit();
+    
+    void setGame(Game *g);
     string getColour(int type);
-    void roll();
-    void next();
-    void trade(string tradeWith, vector<Property*> myProperties, vector<Property*> othersProperties);
-    void improve();
-    void mortage(Property *p);
-    void unmortage(Property *p);
+    
+    void setInJail(int inJail);
+    int getInJail();
+    
+    void setForfeited(bool forfeited);
+    bool getForfeited();
+    
+    bool roll(int firstDice = 0, int secondDice = 0);
+    bool next();
+    void leaveTimsLine(string payment);
+    void trade(char tradeWithC, vector<string> propertyNames);
+    void improve(string improveAbS, string buyOrSell);
+    void mortgage(string propertyName);
+    void unmortgage(string propertyName);
     void bankrupt();
     void assets();
     void save(string);
+    
+    bool movePlayer(int steps);
+    
+    void noEnoughCash();
+    void checkCombo();
 };
 
 #endif

@@ -1,8 +1,82 @@
 #include "AcademicBuilding.h"
 #include "Player.h"
+#include "Game.h"
 
-AcademicBuilding::AcademicBuilding(string name, int number, int purchaseCost, int baseTuition, int improvementCost): Property(name, number, purchaseCost, baseTuition), improvementCost(improvementCost), improvementLevel(0) {
-    
+string AcademicBuilding::to_string(int i) {
+    ostringstream ss;
+    ss << i;
+    return ss.str();
+}
+
+AcademicBuilding::AcademicBuilding(string name, int number, int purchaseCost, int baseTuition, int improvementCost, int tuition1, int tuition2, int tuition3, int tuition4, int tuition5): Property(name, number, purchaseCost), improvementCost(improvementCost), improvementLevel(0) {
+    tuitionWithImprovements[0] = baseTuition;
+    tuitionWithImprovements[1] = tuition1;
+    tuitionWithImprovements[2] = tuition2;
+    tuitionWithImprovements[3] = tuition3;
+    tuitionWithImprovements[4] = tuition4;
+    tuitionWithImprovements[5] = tuition5;
+}
+
+void AcademicBuilding::setImprovementLevel(int improvementLevel) {
+    this->improvementLevel = improvementLevel;
+}
+
+void AcademicBuilding::improve(bool buy, Game *game) {
+    if (buy) {
+        if (improvementLevel < 5) {
+            if (owner->getCash() >= improvementCost) {
+                owner->addCash(-improvementCost);
+                improvementLevel++;
+                
+                game->getMIB().push(string(owner->getName() + " spent $" + to_string(improvementCost) + " and improved " + name + " to level " + to_string(improvementLevel)));
+                game->printBoard();
+            } else {
+                owner->noEnoughCash();
+            }
+        } else {
+            game->getMIB().push(string(name + " has reached the highest improvement level"));
+            game->printBoard();
+        }
+    } else {
+        if (improvementLevel == 0) {
+            game->getMIB().push(string(name + " is at the lowest improvement level"));
+            game->printBoard();
+        } else {
+            owner->addCash((int)(improvementCost*0.5));
+            improvementLevel--;
+            
+            game->getMIB().push(string(owner->getName() + " reduced " + name + " to level " + to_string(improvementLevel) + " and received $" + to_string(improvementCost)));
+            game->printBoard();
+        }
+    }
+}
+
+int AcademicBuilding::getImprovementCost() {
+    return improvementCost;
+}
+
+int AcademicBuilding::getImprovementLevel() {
+    return improvementLevel;
+}
+
+bool AcademicBuilding::monopolyImprovementsAreClear(Block** gameBoard) {
+    if (number == 1 || number == 3) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[36])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[38])->getImprovementLevel() == 0);
+    } else if (number == 6 || number == 8 || number == 9) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[30])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[31])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[33])->getImprovementLevel() == 0);
+    } else if (number == 11 || number == 13 || number == 14) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[21])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[23])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[27])->getImprovementLevel() == 0);
+    } else if (number == 16 || number == 18 || number == 19) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[11])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[13])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[17])->getImprovementLevel() == 0);
+    } else if (number == 21 || number == 23 || number == 24) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[1])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[3])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[4])->getImprovementLevel() == 0);
+    } else if (number == 26 || number == 27 || number == 29) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[6])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[7])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[9])->getImprovementLevel() == 0);
+    } else if (number == 31 || number == 32 || number == 34) {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[12])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[14])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[18])->getImprovementLevel() == 0);
+    } else {
+        return (dynamic_cast<AcademicBuilding*>(gameBoard[24])->getImprovementLevel() == 0 && dynamic_cast<AcademicBuilding*>(gameBoard[28])->getImprovementLevel() == 0);
+    }
 }
 
 void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin, vector<Player*> players, MyInfoBoard &mib) {
@@ -12,7 +86,9 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin, vector<
     
     if (number == 11 || number == 13 || number == 14 || number == 16 || number == 18 || number == 19) {
         if (lineNum >= 3 && lineNum <= 5 && owner) {
-            if (combo) {
+            if (mortgaged) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "M" << COLOUR_DEFAULT_BACKGROUND;
+            } else if (combo) {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
             } else {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << " " << COLOUR_DEFAULT_BACKGROUND;
@@ -235,16 +311,21 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin, vector<
         case 5: {
             string s = "";
             int count = 0;
+            
             for (vector<Player*>::iterator it = landers.begin(); it != landers.end(); it++) {
                 count++;
                 s.append((*it)->getColour(COLOUR_TYPE_FOREGROUND));
+                if ((*it)->getMyTurn()) {
+                    s.append(STYLE_BLINK);
+                }
                 s.append(string(1, (*it)->getPiece()));
+                s.append(STYLE_DEFAULT);
             }
             
             cout << "|" << s << COLOUR_DEFAULT_FOREGROUND;
             repeat(" ", 7-count);
             
-            if (number == 11 || number == 13 || number == 14 || number == 18 || number == 19) {
+            if (number == 11 || number == 14 || number == 18 || number == 19) {
                 bar71();
             } else if (number == 13) {
                 if (mib.getInfoBoard().size() > 4) {
@@ -266,6 +347,9 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin, vector<
     if ((number >= 30 && number <= 39)) {
         cout << "|";
         if (lineNum >= 3 && lineNum <= 5 && owner) {
+            if (mortgaged) {
+                cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "M" << COLOUR_DEFAULT_BACKGROUND;
+            }
             if (combo) {
                 cout << owner->getColour(COLOUR_TYPE_BACKGROUND) << "*" << COLOUR_DEFAULT_BACKGROUND;
             } else {
@@ -276,7 +360,10 @@ void AcademicBuilding::print(int lineNum, int leftMargin, int topMargin, vector<
 }
 
 int AcademicBuilding::getTuition(int steps = 0) {
-    return 0;
+    if (improvementLevel == 0 && combo) {
+        return tuitionWithImprovements[improvementLevel * 2];
+    }
+    return tuitionWithImprovements[improvementLevel];
 }
 
 string AcademicBuilding::getColour() {

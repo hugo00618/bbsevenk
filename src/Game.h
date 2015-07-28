@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <sstream>
+#include <fstream>
 #include <string>
 #include <iomanip>
 
@@ -22,26 +23,43 @@
 using namespace std;
 
 const int MAX_NUM_OF_PLAYERS = 7;
+const int OSAP_AMOUNT = 200;
 
 class Game {
-    Block **gameboard;
+    Block *gameboard[40];
     int numOfPlayers;
     vector<Player*> players;
     MyInfoBoard mib;
+    
+    int gameBoardArrayNumbers[28];
+    
+    bool debugMode;
 
     struct Piece {
         char symbol;
         string discription;
     };
     map<char, string> pieces;
-    int myLeftMargin, myTopMargin;
     
-    void printBoard(int myWindowWidth, int myWindowHeight);
+    int myWindowWidth, myWindowHeight, myLeftMargin, myTopMargin;
+    
+    void clearScreen(int windowHeight);
+    
+    string to_string(int i);
 public:
-    Game();
+    Game(bool debugMode);
+    Game(bool debugMode, string filename);
     ~Game();
     void play();
-    void printHelp(int myWindowWidth, int myWindowHeight);
+    
+    vector<Player*> *getPlayers();
+    MyInfoBoard &getMIB();
+    Block **getGameBoard();
+    int *getGameBoardArrayNumbers();
+    bool getDebugMode();
+    
+    void printHelp();
+    void printBoard();
 };
 
 #endif
