@@ -13,7 +13,7 @@ class AcademicBuilding: public Property {
     
     string getColour();
     
-    string to_string(int i);
+    string my_to_string(int i);
 public:
     AcademicBuilding(string name, int number, int purchaseCost, int bastTuition, int improvementCost, int tuition1, int tuition2, int tuition3, int tuition4, int tuition5);
     

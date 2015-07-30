@@ -43,6 +43,8 @@ class Player {
     
     int rollDice();
     void getOutOfJail();
+    
+    string my_to_string(int i);
 public:
     Player();
     

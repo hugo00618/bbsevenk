@@ -45,7 +45,7 @@ class Game {
     
     void clearScreen(int windowHeight);
     
-    string to_string(int i);
+    string my_to_string(int i);
 public:
     Game(bool debugMode);
     Game(bool debugMode, string filename);

@@ -6,7 +6,7 @@
 #include "Player.h"
 
 class NonProperty: public Block {
-    string to_string(int i);
+    string my_to_string(int i);
 public:
     NonProperty(string name, int number);
     bool effect(Game *game, Player *p);

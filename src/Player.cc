@@ -3,7 +3,7 @@
 
 using namespace std;
 
-string to_string(int i) {
+string Player::my_to_string(int i) {
     ostringstream ss;
     ss << i;
     return ss.str();
@@ -138,12 +138,12 @@ void Player::itIsMyTurn() {
             outputFile << game->getPlayers()->size() << endl;
             for (vector<Player*>::iterator it = game->getPlayers()->begin(); it != game->getPlayers()->end(); it++) {
                 if ((*it)->getNumber() > number) {
-                    outputFile << (*it)->getName() << " " << (*it)->getPiece() << " " << (*it)->getRurCups()->size() << " " << (*it)->getCash() << " " << (*it)->getLandsOn()->getNumber() << ((*it)->getLandsOn()->getNumber() == 10? string(" " + to_string((*it)->getInJail())): "") << endl;
+                    outputFile << (*it)->getName() << " " << (*it)->getPiece() << " " << (*it)->getRurCups()->size() << " " << (*it)->getCash() << " " << (*it)->getLandsOn()->getNumber() << ((*it)->getLandsOn()->getNumber() == 10? string(" " + my_to_string((*it)->getInJail())): "") << endl;
                 }
             }
             for (vector<Player*>::iterator it = game->getPlayers()->begin(); it != game->getPlayers()->end(); it++) {
                 if ((*it)->getNumber() <= number) {
-                    outputFile << (*it)->getName() << " " << (*it)->getPiece() << " " << (*it)->getRurCups()->size() << " " << (*it)->getCash() << " " << (*it)->getLandsOn()->getNumber() << ((*it)->getLandsOn()->getNumber() == 10? string(" " + to_string((*it)->getInJail())): "") << endl;
+                    outputFile << (*it)->getName() << " " << (*it)->getPiece() << " " << (*it)->getRurCups()->size() << " " << (*it)->getCash() << " " << (*it)->getLandsOn()->getNumber() << ((*it)->getLandsOn()->getNumber() == 10? string(" " + my_to_string((*it)->getInJail())): "") << endl;
                     if ((*it)->getNumber() == number) {
                         break;
                     }
@@ -153,7 +153,7 @@ void Player::itIsMyTurn() {
             int *gameBoardArrayNumbers = game->getGameBoardArrayNumbers();
             for (int i = 0; i < 28; i++) {
                 Property *thisProperty = dynamic_cast<Property*>(game->getGameBoard()[gameBoardArrayNumbers[i]]);
-                outputFile << thisProperty->getName() << " " << (thisProperty->getOwner()? thisProperty->getOwner()->getName(): "BANK") << (dynamic_cast<AcademicBuilding*>(thisProperty)? string(" " + to_string(dynamic_cast<AcademicBuilding*>(thisProperty)->getImprovementLevel())): "") << endl;
+                outputFile << thisProperty->getName() << " " << (thisProperty->getOwner()? thisProperty->getOwner()->getName(): "BANK") << (dynamic_cast<AcademicBuilding*>(thisProperty)? string(" " + my_to_string(dynamic_cast<AcademicBuilding*>(thisProperty)->getImprovementLevel())): "") << endl;
             }
             
             outputFile.close();
@@ -184,7 +184,7 @@ bool Player::roll(int firstDice, int secondDice) {
         }
         sum = firstDice + secondDice;
         
-        game->getMIB().push(string(name + " rolled " + to_string(firstDice) + " and " + to_string(secondDice)));
+        game->getMIB().push(string(name + " rolled " + my_to_string(firstDice) + " and " + my_to_string(secondDice)));
         game->printBoard();
         
         if (firstDice == secondDice) {
@@ -278,7 +278,7 @@ bool Player::movePlayer(int steps) {
     }
     
     newBlock->addLander(this);
-    game->getMIB().push(string(name + " moved " + to_string(abs(steps)) + " step" + (abs(steps) > 1? "s": "") + (steps > 0? " forward": " backward") + " and landed on " + landsOn->getName()));
+    game->getMIB().push(string(name + " moved " + my_to_string(abs(steps)) + " step" + (abs(steps) > 1? "s": "") + (steps > 0? " forward": " backward") + " and landed on " + landsOn->getName()));
     game->printBoard();
     
     if (dynamic_cast<Property*>(newBlock)) {
@@ -299,12 +299,12 @@ bool Player::movePlayer(int steps) {
                 cash -= tuition;
                 prop->getOwner()->addCash(tuition);
                 
-                game->getMIB().push(string(name + " paied $" + to_string(tuition) + " of tuition to " + prop->getOwner()->getName()));
+                game->getMIB().push(string(name + " paied $" + my_to_string(tuition) + " of tuition to " + prop->getOwner()->getName()));
                 game->printBoard();
             }
         } else if (prop->getOwner() == NULL) {
             while (true) {
-                game->getMIB().push(string(prop->getName() + " is unowned, does " + name + " want to buy it for $" + to_string(prop->getPurchaseCost()) + "? (y/n):"));
+                game->getMIB().push(string(prop->getName() + " is unowned, does " + name + " want to buy it for $" + my_to_string(prop->getPurchaseCost()) + "? (y/n):"));
                 game->printBoard();
                 string tmpS;
                 cin >> tmpS;
@@ -346,7 +346,7 @@ bool Player::movePlayer(int steps) {
 
 void Player::assets() {
     game->getMIB().push(string("Assets of " + name + ":"));
-    game->getMIB().push(string("Cash: $" + to_string(cash)));
+    game->getMIB().push(string("Cash: $" + my_to_string(cash)));
     
     string propertyList = "Properties: ";
     if (properties.size() > 0) {
@@ -358,7 +358,7 @@ void Player::assets() {
     }
     game->getMIB().push(propertyList);
     
-    game->getMIB().push(string("Roll Up the Rim Cups: " + to_string(rurCups.size())));
+    game->getMIB().push(string("Roll Up the Rim Cups: " + my_to_string(rurCups.size())));
     
     game->printBoard();
 }
@@ -478,7 +478,7 @@ void Player::mortgage(string propertyName) {
         int loan = (int) (mortgageP->getPurchaseCost() / 2.0);
         cash += loan;
         
-        game->getMIB().push(string(name + " mortgaged " + propertyName + " and received $" + to_string(loan)));
+        game->getMIB().push(string(name + " mortgaged " + propertyName + " and received $" + my_to_string(loan)));
         game->printBoard();
     }
 }
@@ -504,7 +504,7 @@ void Player::unmortgage(string propertyName) {
         } else {
             cash -= loan;
             mortgageP->setMortgaged(false);
-            game->getMIB().push(string(name + " paid $" + to_string(loan) + " and unmortgaged " + propertyName));
+            game->getMIB().push(string(name + " paid $" + my_to_string(loan) + " and unmortgaged " + propertyName));
             game->printBoard();
         }
     }
@@ -522,7 +522,7 @@ void Player::trade(char tradeWithC, vector<string> propertyNames) {
     }
     
     if (!tradeWith) {
-        game->getMIB().push(string("Player " + to_string(tradeWithC) + " doesn't exist"));
+        game->getMIB().push(string("Player " + my_to_string(tradeWithC) + " doesn't exist"));
         game->printBoard();
     } else {
         int myCash = 0;
@@ -585,13 +585,13 @@ void Player::trade(char tradeWithC, vector<string> propertyNames) {
             while (true) {
                 game->getMIB().push(string(name + " wants to trade with " + tradeWithS));
                 
-                string myOfferingS = myCash == 0? "": ("$" + to_string(myCash) + " ");
+                string myOfferingS = myCash == 0? "": ("$" + my_to_string(myCash) + " ");
                 for (vector<Property*>::iterator it = myProperties.begin(); it != myProperties.end(); it++) {
                     myOfferingS.append((*it)->getName() + ((*it)->getMortgaged()?"<M>": "")  + " ");
                 }
                 game->getMIB().push(string(name + " is offering: " + myOfferingS));
                 
-                string oOfferingS = oCash == 0? "": ("$" + to_string(oCash) + " ");
+                string oOfferingS = oCash == 0? "": ("$" + my_to_string(oCash) + " ");
                 for (vector<Property*>::iterator it = oProperties.begin(); it != oProperties.end(); it++) {
                     oOfferingS.append((*it)->getName() + ((*it)->getMortgaged()?"<M>": "")  + " ");
                 }
@@ -606,12 +606,12 @@ void Player::trade(char tradeWithC, vector<string> propertyNames) {
                     if (myCash != 0) {
                         cash -= myCash;
                         tradeWith->addCash(myCash);
-                        game->getMIB().push(string(name + " gave $" + to_string(myCash) + " to " + tradeWith->getName()));
+                        game->getMIB().push(string(name + " gave $" + my_to_string(myCash) + " to " + tradeWith->getName()));
                     }
                     if (oCash != 0) {
                         cash += oCash;
                         tradeWith->addCash(-oCash);
-                        game->getMIB().push(string(tradeWith->getName() + " gave $" + to_string(oCash) + " to " + name));
+                        game->getMIB().push(string(tradeWith->getName() + " gave $" + my_to_string(oCash) + " to " + name));
                     }
                     
                     for (vector<Property*>::iterator it1 = myProperties.begin(); it1 != myProperties.end(); it1++) {

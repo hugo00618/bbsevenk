@@ -2,7 +2,7 @@
 #include "Player.h"
 #include "Game.h"
 
-string AcademicBuilding::to_string(int i) {
+string AcademicBuilding::my_to_string(int i) {
     ostringstream ss;
     ss << i;
     return ss.str();
@@ -28,7 +28,7 @@ void AcademicBuilding::improve(bool buy, Game *game) {
                 owner->addCash(-improvementCost);
                 improvementLevel++;
                 
-                game->getMIB().push(string(owner->getName() + " spent $" + to_string(improvementCost) + " and improved " + name + " to level " + to_string(improvementLevel)));
+                game->getMIB().push(string(owner->getName() + " spent $" + my_to_string(improvementCost) + " and improved " + name + " to level " + my_to_string(improvementLevel)));
                 game->printBoard();
             } else {
                 owner->noEnoughCash();
@@ -45,7 +45,7 @@ void AcademicBuilding::improve(bool buy, Game *game) {
             owner->addCash((int)(improvementCost*0.5));
             improvementLevel--;
             
-            game->getMIB().push(string(owner->getName() + " reduced " + name + " to level " + to_string(improvementLevel) + " and received $" + to_string(improvementCost)));
+            game->getMIB().push(string(owner->getName() + " reduced " + name + " to level " + my_to_string(improvementLevel) + " and received $" + my_to_string(improvementCost)));
             game->printBoard();
         }
     }

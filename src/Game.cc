@@ -2,7 +2,7 @@
 
 using namespace std;
 
-string Game::to_string(int i) {
+string Game::my_to_string(int i) {
     ostringstream ss;
     ss << i;
     return ss.str();
@@ -93,7 +93,7 @@ Game::Game(bool debugMode): mib(63, 14), debugMode(debugMode) {
     // setup
     printBoard();
     while (true) {
-        mib.push(string("Number of players (2-" + to_string(MAX_NUM_OF_PLAYERS) + "): "));
+        mib.push(string("Number of players (2-" + my_to_string(MAX_NUM_OF_PLAYERS) + "): "));
         printBoard();
         string tmpS;
         cin >> tmpS;
@@ -102,13 +102,13 @@ Game::Game(bool debugMode): mib(63, 14), debugMode(debugMode) {
         if (ss >> numOfPlayers && numOfPlayers >= 2 && numOfPlayers <= MAX_NUM_OF_PLAYERS) {
             break;
         } else {
-            mib.push(string("Please enter a number between 2 and " + to_string(MAX_NUM_OF_PLAYERS)));
+            mib.push(string("Please enter a number between 2 and " + my_to_string(MAX_NUM_OF_PLAYERS)));
         }
     }
     
     for (int i = 0; i < numOfPlayers; i++) {
         Player *p = new Player();
-        mib.push(string("Player " + to_string(i+1) + "'s name: "));
+        mib.push(string("Player " + my_to_string(i+1) + "'s name: "));
         printBoard();
         string tmpS;
         cin >> tmpS;
@@ -434,7 +434,7 @@ void Game::play() {
         
         Player *winner = *players.begin();
         string winningMessage = winner->getName() + " wins!";
-        string winningNetWorth = winner->getName() + " 's net worth is " + to_string(winner->getNetWorth());
+        string winningNetWorth = winner->getName() + " 's net worth is " + my_to_string(winner->getNetWorth());
         
         cout << setw((int)(myWindowWidth+winningMessage.length())/2) << winningMessage << endl;
         cout << setw((int)(myWindowWidth+winningNetWorth.length())/2) << winningNetWorth << endl << endl;

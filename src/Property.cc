@@ -6,7 +6,7 @@ Property::Property(string name, int number, int purchaseCost): Block(name, numbe
     
 }
 
-string Property::to_string(int i) {
+string Property::my_to_string(int i) {
     ostringstream ss;
     ss << i;
     return ss.str();
@@ -75,7 +75,7 @@ void Property::holdAuction(Game *game, vector<Player*> *bidders, int startingFro
             firstRound = false;
             if (!(*it)->getForfeited()) {
                 while (true) {
-                    game->getMIB().push(string("Highest bid: " + to_string(highestBid)));
+                    game->getMIB().push(string("Highest bid: " + my_to_string(highestBid)));
                     game->getMIB().push(string("What would " + (*it)->getName() + " do (bid <amount>/pass/forfeit):"));
                     game->printBoard();
                     
@@ -90,7 +90,7 @@ void Property::holdAuction(Game *game, vector<Player*> *bidders, int startingFro
                                 highestBid = amount;
                                 highestBidder = *it;
                                 
-                                game->getMIB().push(string((*it)->getName() + " bid $ " + to_string(amount)));
+                                game->getMIB().push(string((*it)->getName() + " bid $ " + my_to_string(amount)));
                                 break;
                             } else {
                                 game->getMIB().push("Please enter a number that is higher than the highest bid");

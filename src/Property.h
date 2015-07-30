@@ -12,7 +12,7 @@ class Game;
 
 class Property: public Block {
 private:
-    string to_string(int i);
+    string my_to_string(int i);
 protected:
     Player *owner;
     int purchaseCost;

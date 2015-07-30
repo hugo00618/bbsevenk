@@ -6,7 +6,7 @@ NonProperty::NonProperty(string name, int number): Block(name, number) {
     
 }
 
-string NonProperty::to_string(int i) {
+string NonProperty::my_to_string(int i) {
     ostringstream ss;
     ss << i;
     return ss.str();
@@ -67,7 +67,7 @@ bool NonProperty::effect(Game *game, Player *p) {
         }
     } else if (name == "TUITION") {
         while (true) {
-            game->getMIB().push(string(p->getName() + " has to pay either $300 or 10% of total worth ($" + to_string((int)(p->getNetWorth() * 0.1)) + ") (300/worth):"));
+            game->getMIB().push(string(p->getName() + " has to pay either $300 or 10% of total worth ($" + my_to_string((int)(p->getNetWorth() * 0.1)) + ") (300/worth):"));
             game->printBoard();
             
             string tmpS;
@@ -82,7 +82,7 @@ bool NonProperty::effect(Game *game, Player *p) {
                 int payment = -(int)(p->getNetWorth() * 0.1);
                 p->addCash(payment);
                 
-                game->getMIB().push(string(p->getName() + " paid 10% of total worth ($" + to_string(-payment) + ") of tuition"));
+                game->getMIB().push(string(p->getName() + " paid 10% of total worth ($" + my_to_string(-payment) + ") of tuition"));
                 game->printBoard();
                 break;
             } else {
