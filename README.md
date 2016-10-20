@@ -1,4 +1,4 @@
-# cs246_bb7k
+# cs246bb7k
 
 ## Screenshot
 ![](src/screenshot.png)
